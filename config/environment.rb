@@ -8,4 +8,4 @@ configure :development do
   'sqlite3:db/database.db'
 end
 
-require './app'
+# require_relative'./app'
