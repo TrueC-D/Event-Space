@@ -1,13 +1,19 @@
 class UsersController < ApplicationController
   get '/signup' do
     if logged_in?
-      redirect '/event_index'
+      redirect '/'
     else
     erb :'users/create_user'
     end
   end
   
   post '/signup' do
+    if params.any? {|key, value| value.strip.length == 0}
+      redirect '/signup'
+    elsif User.find_by(:username => params[:username])
+      redirect '/signup'
+    else
+      redirect :'/events'
   end
   
   

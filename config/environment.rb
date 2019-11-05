@@ -8,4 +8,6 @@ configure :development do
   'sqlite3:db/database.db'
 end
 
+require 'sinatra'
+
 # require_relative'./app'
