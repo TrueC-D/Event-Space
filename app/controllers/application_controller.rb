@@ -6,7 +6,7 @@ class ApplicationController <Sinatra::Base
   end
   
   get '/' do 
-    erb :index
+    erb :"index"
   end
   
   # <a href "/my_events">Home</a> <a href "/events">Events Trending</a> <a href "/login">Login</a> <a href "/logout">Logout</a> 
