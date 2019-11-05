@@ -7,6 +7,10 @@ class UsersController < ApplicationController
     end
   end
   
+  post '/signup' do
+  end
+  
+  
   # <a href "/my_events">Home</a> <a href "/events">Events Trending</a> <a href "/login">Login</a> <a href "/logout">Logout</a> 
 
   
@@ -23,7 +27,17 @@ class UsersController < ApplicationController
   end
   
   post '/login' do 
-    redirect ''
+    
   end
-
+  
+  get '/edit_account_details' do
+    erb "users/update_user"
+  end
+  
+  delete '/delete_accpount' do
+  end
+  
+  get '/logout' do
+  end
+  
 end
