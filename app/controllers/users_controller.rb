@@ -31,11 +31,22 @@ class UsersController < ApplicationController
 
   
   get '/login' do
-    erb :'users/user_login'
+    if logged_in?
+      redirect '/events'
+    else
+      erb :'users/user_login'
+    end
   end
   
   post '/login' do 
-    
+    @user = User.find_by(:username=> params[:username])
+    if @user && @user.authenticate(params[:password])
+      session[:user_id] = @user.username
+      redirect '/events'
+    else
+      flash[:message] = "Your credentials are incorrect. Please try again."
+      redirect '/login'
+    end
   end
   
   get '/edit_account_details' do
@@ -46,6 +57,12 @@ class UsersController < ApplicationController
   end
   
   get '/logout' do
+    if logged_in?
+      session.clear
+      redirect 'login'
+    else
+      redirect '/'
+    end
   end
   
 end
