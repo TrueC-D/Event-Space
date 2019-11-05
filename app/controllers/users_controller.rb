@@ -1,34 +1,29 @@
 class UsersController < ApplicationController
   get '/signup' do
     if logged_in?
-      redirect '/tweets'
+      redirect '/event_index'
     else
-    erb :'users/signup'
+    erb :'users/create_user'
     end
   end
   
-  post '/signup' do
-    if params[:username] == ''|| params[:password] == ''|| params[:email] == ''
-      redirect '/signup'
-    else User.create(username: params[:username], email: params[:email], password: params[:password])
-      redirect '/tweets'
-    end
-  end
+  # <a href "/my_events">Home</a> <a href "/events">Events Trending</a> <a href "/login">Login</a> <a href "/logout">Logout</a> 
+
+  
+  # post '/signup' do
+  #   if params[:username] == ''|| params[:password] == ''|| params[:email] == ''
+  #     redirect '/signup'
+  #   else User.create(username: params[:username], email: params[:email], password: params[:password])
+  #     redirect '/tweets'
+  #   end
+  # end
   
   get '/login' do
-    erb :'users/login'
-  end
-  post '/login' do 
-    redirect '/account'
+    erb :'users/user_login'
   end
   
-  helpers do
-    def logged_in?
-      !!session[:user_id]
-    end
-
-    def current_user
-      User.find(session[:user_id])
-    end
+  post '/login' do 
+    redirect ''
   end
+
 end
