@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
+  use Rack::Flash
+  
   get '/signup' do
     if logged_in?
-      redirect '/'
+      redirect '/events'
     else
     erb :'users/create_user'
     end
@@ -9,11 +11,19 @@ class UsersController < ApplicationController
   
   post '/signup' do
     if params.any? {|key, value| value.strip.length == 0}
+      flash[:message] = "Entries cannot be blank."
       redirect '/signup'
     elsif User.find_by(:username => params[:username])
+       flash[:message] = "This username is taken."
+      redirect '/signup'
+    elsif User.find_by(:email => params[:email])
+      flash[:message] = "An account is already associated to this e-mail."
       redirect '/signup'
     else
-      redirect :'/events'
+      user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
+      user.save
+      session[:user_id] = user.id
+      redirect '/events'
   end
   
   
