@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
   use Rack::Flash
   
+  get '/users/:slug' do
+    @user = User.find_by_slug(params[:slug])
+    erb :'users/show'
+  end
+  
   get '/signup' do
     if logged_in?
       redirect '/events'
@@ -24,6 +29,7 @@ class UsersController < ApplicationController
       user.save
       session[:user_id] = user.id
       redirect '/events'
+    end
   end
   
   
@@ -53,7 +59,7 @@ class UsersController < ApplicationController
     erb "users/update_user"
   end
   
-  delete '/delete_accpount' do
+  delete '/delete_account' do
   end
   
   get '/logout' do
@@ -65,4 +71,12 @@ class UsersController < ApplicationController
     end
   end
   
+  def slug
+    self.username.gsub(' ', '-').downcase
+  end
+  
+  get '/users/#{user.slug}' do 
+    user = User.find_by_slug(params[:slug])
+    erb :'users/user_events'
+  end
 end
