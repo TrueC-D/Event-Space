@@ -1,5 +1,9 @@
 class EventsController < ApplicationController
+
   
+  get '/events' do 
+    erb :'events/event_index'
+  end
 end
 
 # <a href "/my_events">Home</a> <a href "/events">Events Trending</a> <a href "/login">Login</a> <a href "/logout">Logout</a> 

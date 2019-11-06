@@ -62,9 +62,19 @@ class UsersController < ApplicationController
     end
   end
   
-  get '/users/:slug' do
+  get 'users/:slug/events_hosted' do
     @user = User.find_by_slug(params[:slug])
-    erb :'users/show'
+    if logged_in?
+        erb :"users/:user_events"
+    else
+    
+      redirect '/login'
+    end
+  end
+  
+  # get '/users/:slug' do
+  #   @user = User.find_by_slug(params[:slug])
+  #   erb :'users/show'
   end
   
   get '/user/:slug/edit' do
@@ -74,14 +84,14 @@ class UsersController < ApplicationController
         erb :'user/update_user'
       else
         flash[:message] = "You are not authorized to view this page."
-        redirect '/my_events'
+        redirect '/events'
       end
     else
       redirect '/login'
     end
   end
   
-  patch '/user/:slug' do
+  patch '/users/:slug' do
     @user = User.find_by_slug(params[:slug])
     if logged_in?
       if @user == current_user
@@ -94,10 +104,10 @@ class UsersController < ApplicationController
           # @user.update(last_name: params[:last_name])
           # @user.update(email: params[:email])
           # @user.update(password: params[:password])
-          redirect '/events'
+          redirect 'users/#{params[:slug]/my_events'
         end
       else
-        redirect '/my_events'
+        redirect '/events'
       end
     else
       redirect '/login'
