@@ -32,10 +32,6 @@ class UsersController < ApplicationController
     end
   end
   
-  
-  # <a href "/my_events">Home</a> <a href "/events">Events Trending</a> <a href "/login">Login</a> <a href "/logout">Logout</a> 
-
-  
   get '/login' do
     if logged_in?
       redirect '/events'
@@ -71,12 +67,64 @@ class UsersController < ApplicationController
     end
   end
   
-  def slug
-    self.username.gsub(' ', '-').downcase
+  get '/user/:slug/edit' do
+    @user = User.find_by_slug(params[:slug])
+    if logged_in?
+      if current_user == @user
+        erb :'user/update_user'
+      else
+        flash[:message] = "You are not authorized to view this page."
+        redirect '/my_events'
+      end
+    else
+      redirect '/login'
+    end
   end
   
-  get '/users/#{user.slug}' do 
-    user = User.find_by_slug(params[:slug])
-    erb :'users/user_events'
+  patch '/user/:slug' do
+    @user = User.find_by_slug(params[:slug])
+    if logged_in?
+      if @user == current_user
+        if params.any? {|key, value| value.strip.length == 0}
+          flash[:message] = "Entries cannot be empty."
+          redirect "/user/#{params[:slug]}/edit"
+        else
+          @user.update
+          # @user.update(first_name: params[:first_name])
+          # @user.update(last_name: params[:last_name])
+          # @user.update(email: params[:email])
+          # @user.update(password: params[:password])
+          redirect '/events'
+        end
+      else
+        redirect '/my_events'
+      end
+    else
+      redirect '/login'
+    end
   end
+  
+  delete '/user/:slug/delete_account' do
+    @user = User.find_by_slug(params[:slug])
+    if logged_in?
+      if current_user == @user
+        @user.delete
+        redirect '/'
+      else
+        redirect '/events'
+      end
+    else
+      redirect '/login'
+    end
+  end
+    
+  
+  # def slug
+  #   self.username.gsub(' ', '-').downcase
+  # end
+  
+  # get '/users/{user.slug}' do 
+  #   user = User.find_by_slug(params[:slug])
+  #   erb :'users/user_events'
+  # end
 end
