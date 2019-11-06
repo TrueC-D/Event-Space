@@ -62,19 +62,18 @@ class UsersController < ApplicationController
     end
   end
   
-  get 'users/:slug/events_hosted' do
+  get '/users/:slug' do
     @user = User.find_by_slug(params[:slug])
     if logged_in?
-        erb :"users/:user_events"
+      if current_user = @user
+        erb :'users/user_info'
+      else
+        flash[:message] = "You are not authorized to view this page."
+        redirect '/events'
+      end
     else
-    
-      redirect '/login'
+      redirect 'login'
     end
-  end
-  
-  # get '/users/:slug' do
-  #   @user = User.find_by_slug(params[:slug])
-  #   erb :'users/show'
   end
   
   get '/user/:slug/edit' do
@@ -104,9 +103,10 @@ class UsersController < ApplicationController
           # @user.update(last_name: params[:last_name])
           # @user.update(email: params[:email])
           # @user.update(password: params[:password])
-          redirect 'users/#{params[:slug]/my_events'
+          redirect '/events'
         end
       else
+        flash[:message] = "You are not authorized to make this request."
         redirect '/events'
       end
     else
@@ -121,11 +121,22 @@ class UsersController < ApplicationController
         @user.delete
         redirect '/'
       else
+        flash[:message] = "You are not authorized to make this request."
         redirect '/events'
       end
     else
       redirect '/login'
     end
   end
+  
+  get 'users/:slug/events_hosted' do
+    @user = User.find_by_slug(params[:slug])
+    if logged_in?
+        erb :"users/:user_events"
+    else
     
+      redirect '/login'
+    end
+  end
+  
 end
