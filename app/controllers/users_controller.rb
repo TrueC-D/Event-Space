@@ -46,13 +46,6 @@ class UsersController < ApplicationController
     end
   end
   
-  get '/edit_account_details' do
-    erb "users/update_user"
-  end
-  
-  delete '/delete_account' do
-  end
-  
   get '/logout' do
     if logged_in?
       session.clear
@@ -77,6 +70,41 @@ class UsersController < ApplicationController
   end
   
   get '/user/:slug/edit/password_verfication' do
+    @user = User.find_by_slug(params[:slug])
+    if logged_in?
+      if current_user == @user
+        erb: '/user/password_verfication'
+      else
+        redirect '/events'
+      end
+    else
+      redirect '/login'
+    end
+  end
+  
+  post '/user/:slug/edit/password_verfication' do
+    @user = User.find_by_slug(params[:slug])
+    if logged_in?
+      if current_user == @user
+        if params[:password1] == [:password2]
+          if @user.authenticate(params[:password1])
+            session[:password_verfication] = true
+            redirect "/user/#{@user.slug}/edit"
+          else
+            flash[:message] = "Password is incorrect."
+            redirect "user/#{@user.slug}/edit/password_verfication"
+        else
+          flash[:message] = "Your entries did not match."
+          erb: '/user/password_verfication'
+        end
+      else
+        redirect '/events'
+      end
+    else
+      redirect '/login'
+    end
+    
+    
   end
   
   get '/user/:slug/edit' do
