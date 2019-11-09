@@ -32,7 +32,7 @@ class EventsController < ApplicationController
       redirect '/login'
     end
   end
-  
+
   get '/events/:id' do
     if logged_in?
       @event = Event.find_by_id(params[:id])

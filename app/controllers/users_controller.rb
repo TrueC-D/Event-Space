@@ -20,7 +20,7 @@ class UsersController < ApplicationController
       flash[:message] = "An account is already associated to this e-mail."
       redirect '/signup'
     else
-      user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
+      user = User.new(:first_name => params[:first_name], :last_name => params[:last_name], :about_me => params[:about_me] :username => params[:username], :email => params[:email], :password => params[:password])
       user.save
       session[:user_id] = user.id
       redirect '/events'
@@ -68,12 +68,15 @@ class UsersController < ApplicationController
       if current_user = @user
         erb :'users/user_info'
       else
-        flash[:message] = "You are not authorized to view this page."
+        flash[:message] 
         redirect '/events'
       end
     else
       redirect 'login'
     end
+  end
+  
+  get '/user/:slug/edit/password_verfication' do
   end
   
   get '/user/:slug/edit' do
@@ -98,11 +101,7 @@ class UsersController < ApplicationController
           flash[:message] = "Entries cannot be empty."
           redirect "/user/#{params[:slug]}/edit"
         else
-          @user.update
-          # @user.update(first_name: params[:first_name])
-          # @user.update(last_name: params[:last_name])
-          # @user.update(email: params[:email])
-          # @user.update(password: params[:password])
+          @user.update(first_name: params[:first_name], last_name: params[:last_name], about_me: params[:about_me], username: params[:username], email: params[:email], password: params[:password])
           redirect '/events'
         end
       else
@@ -114,6 +113,22 @@ class UsersController < ApplicationController
     end
   end
   
+    # class CreateUsers < ActiveRecord::Migration[5.2]
+  # def change
+  #   create_table :users do |t|
+  #     t.string :first_name
+  #     t.string :last_name
+  #     t.text :about_me
+  #     t.string :username
+  #     t.string :password_digest
+  #     t.string :email
+  #     t.timestamps
+  #   end
+  # end
+# end
+  get '/user/:slug/delete_account/password_verfication' do
+  end
+
   delete '/user/:slug/delete_account' do
     @user = User.find_by_slug(params[:slug])
     if logged_in?

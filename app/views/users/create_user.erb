@@ -1,0 +1,47 @@
+<h1>Sign up here!</h1>
+
+<form action= '/signup' method = "post">
+  <label>First Name:</label>
+  <br/>
+  <input type="text" name="first_name">
+  <br/>
+  <label>Last Name:</label>
+  <br/>
+  <input type= "text" name="last_name">
+  <br/>
+  <label>About Me:</label>
+  "We'd like to know about you!"
+  <br>
+  "You can use this section to describe yourself and/or your reason for signing up for Event Space."
+  <br/>
+  <input type= "text" name = "about_me">
+  <br/>
+  <label>Username:</label>
+  <br/>
+  <input type="text" name="username">
+  <br/>
+  <label>Password:</label>
+  <br/>
+  <input type="password" name="password">
+  <br/>
+  <label>Email:</label>
+  <br/>
+  <input type="text" name="email">
+  <br/>
+  <input type="submit"  value = "Sign Up">
+
+</form>
+
+<!--class CreateUsers < ActiveRecord::Migration[5.2]-->
+<!--  def change-->
+<!--    create_table :users do |t|-->
+<!--      t.string :first_name-->
+<!--      t.string :last_name-->
+<!--      t.text :about_me-->
+<!--      t.string :username-->
+<!--      t.string :password_digest-->
+<!--      t.string :email-->
+<!--      t.timestamps-->
+<!--    end-->
+<!--  end-->
+<!--end-->
