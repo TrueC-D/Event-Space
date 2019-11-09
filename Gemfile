@@ -7,6 +7,7 @@ gem 'activerecord', '5.2'
 gem 'sinatra-activerecord'
 gem 'rake'
 gem 'rack-flash3'
+gem 'bcrypt'
 
 
 
