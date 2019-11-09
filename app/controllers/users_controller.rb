@@ -55,7 +55,7 @@ class UsersController < ApplicationController
       flash[:message] = "An account is already associated to this e-mail."
       redirect '/signup'
     else
-      user = User.new(:first_name => params[:first_name], :last_name => params[:last_name], :about_me => params[:about_me] :username => params[:username], :email => params[:email], :password => params[:password])
+      user = User.new(first_name: params[:first_name], last_name: params[:last_name], about_me: params[:about_me], username: params[:username], email: params[:email], password: params[:password])
       user.save
       session[:user_id] = user.id
       redirect '/events'
@@ -95,7 +95,7 @@ class UsersController < ApplicationController
     @destination = "edit"
     if logged_in?
       if current_user == @user
-        erb: '/user/password_verfication'
+        erb :'/user/password_verfication'
       else
         redirect '/events'
       end
@@ -177,7 +177,7 @@ class UsersController < ApplicationController
     @destination = "delete_account"
     if logged_in?
       if current_user == @user
-        erb: '/user/password_verfication'
+        erb :'/user/password_verfication'
       else
         redirect '/events'
       end
