@@ -1,8 +1,9 @@
 class User <ActiveRecord::Base
   has_many :events
-  has_many :attendee_lists, through: :events #should be changed to attendees
-  # has_many :attendee_lists
-  # has_many :events, through: :attendee_lists
+  has_many :event_attendees
+  has_many :users, through: :events
+  # has_many :users, through: :events, through: :event_attendees
+  has_many :events, through: :event_attendees
   
   def slug
     self.username.downcase.gsub(" ", "-")

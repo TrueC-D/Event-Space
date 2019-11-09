@@ -1,6 +1,5 @@
 class Event < ActiveRecord::Base
-  has_many :attendee_lists #should be changed to ":attendees"
   belongs_to :user
-  # has_many :attendee_lists
-  # has_many :users, through: :attendee_lists
+  has_many :event_attendees
+  has_many :users, through: :event_attendees
 end
