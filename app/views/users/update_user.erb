@@ -1,0 +1,33 @@
+<h2>Update Your Info</h2>
+<br/>
+<form action='/users/<%=@user.slug%>' method "post">
+  
+  <label>First Name:</label>
+  <br/>
+  <input type = "text" name = "first_name" value = <%=@user.first_name%>>
+  <br/>
+  <label>Last Name:</label>
+  <br/>
+  <input type = "text" name = "last_name" value = <%=@user.last_name%>>
+  <br/>
+  <label>About <%=@user.username%>: </label>
+  <br>
+  "You can use this section to describe yourself and/or your reason for signing up for Event Space."
+  <br/>
+  <input type = "text" name = "about_me" value = <%=@user.about_me%>>
+  <br/>
+  <label>Username:</label>
+  <br/>
+  <input type = "text" name= "username" value = <%=@user.username%>>
+  <br/>
+  <label>Email:</label>
+  <br/>
+  <input type = "text" name = "email" value = <%=@user.email%>>
+  <br/>
+  <label>Password:</label>
+  <br/>
+  <input type="password" name="password" value = <%=@user.password%>>
+  <br/>
+  <input id="hidden" type= "hidden" name="_method" value="patch">
+  <input type="submit" value= "Update">
+</form>
