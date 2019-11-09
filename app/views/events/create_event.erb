@@ -1,10 +1,21 @@
-<!--#   class CreateEvents < ActiveRecord::Migration[5.2]-->
-<!--#   def change-->
-<!--#     create_table :events do |t|-->
-<!--#       t.string :event_name-->
-<!--#       t.string :event_type-->
-<!--#       t.text :description-->
-<!--#       t.timestamps null: :false-->
-<!--#     end-->
-<!--#   end-->
-<!--# end-->
+<h2>Create an Event</h2>
+<br/>
+<form action="/events" method = "post">
+  <label>Event Name:</label>
+  <br/>
+  <input type= "text" name= "event_name">
+  <br/>
+  <label>Event Type:</label>
+  <br/>
+  <input type= "text" name="event_type">
+  <br/>
+  <label>Description:</label>
+  <br/>
+  <input type= "description" name="description">
+  <br/>
+  <label>Event Time:</label>
+  <br/>
+  <input type= "datetime" name="schedule">
+  <br/>
+  <input type="submit" name="submit" value="Create">
+</form>

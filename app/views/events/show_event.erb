@@ -1,0 +1,26 @@
+<h2><%@event.event_name%></h2>
+<br/>
+<label>Event Type:</label>
+<br/>
+"<%=@event.event_type%>"
+<br/>
+<label>Description:</label>
+<br/>
+'<%=@event.description%>'
+<br/>
+<label>Event Time:</label>
+<br/>
+'<%=@event.schedule%>'
+<br/>
+<% if @event.event_attendees.include?(current_user)%>
+  <h3>"You are attending this event."<h3>
+    <!--<form action ='/events/<%=@event.id%>' method="post">-->
+  
+    <!--<input type="submit" name="submit" value="Submit">-->
+<%else%>
+  <h3>"Would you like to attend this event?"</h3>
+  <!--<form action ='/events/<%=@event.id%>' method="post">-->
+  
+  <!--<input type="submit" name="submit" value="Submit">-->
+<%end%>
+

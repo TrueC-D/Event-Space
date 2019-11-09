@@ -1,0 +1,10 @@
+<h2>Welcom, <%@current_user.first_name%></h2>
+
+<br/>
+
+<label>Events Trending</label>
+<%@events.each do |event|%>
+  <a href='events/<%=event.id%>'> <%=event.event_name%> <%=event.schedule%></a>
+  <br/>
+<%end%>
+  

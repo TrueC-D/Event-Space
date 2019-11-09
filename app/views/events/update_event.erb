@@ -1,0 +1,21 @@
+<h2>Edit Your Event</h2>
+<br/>
+<form action="/events/<%=@event.id%>" method = "post">
+  <label>Event Name:</label>
+  <br/>
+  <input type= "text" name= "event_name" value= "<%=@event.eventname%>">
+  <br/>
+  <label>Event Type:</label>
+  <br/>
+  <input type= "text" name="event_type" value = "<%=@event.event_type%>">
+  <br/>
+  <label>Description:</label>
+  <br/>
+  <input type= "description" name="description" value = "<%=@event.description%>">
+  <br/>
+  <label>Event Time:</label>
+  <br/>
+  <input type= "datetime" name="schedule"<%=@event.schedule%>>
+  <br/>
+  <input type="submit" name="submit" value="Update">
+</form>

@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   get '/events' do 
+    @current_user  = current_user
     if logged_in?
       @events = Events.all
       erb :'events/event_index'
@@ -32,6 +33,7 @@ class EventsController < ApplicationController
   end
 
   get '/events/:id' do
+    @current_user = current_user
     if logged_in?
       @event = Event.find_by_id(params[:id])
       erb :'events/show_event'
@@ -54,7 +56,10 @@ class EventsController < ApplicationController
     end
   end
   
-  patch '/events/id' do 
+  post '/events/:id' do 
+  end
+  
+  patch '/events/:id' do 
     @event = Event.find_by_id(params[:id])
     if logged_in?
       if @event
@@ -79,7 +84,7 @@ class EventsController < ApplicationController
     end
   end
   
-  delete '/events/id/delete' do 
+  delete '/events/:id/delete' do 
     @event = Event.find_by_id(params[:id])
     if logged_in?
       if current_user == @event.user
