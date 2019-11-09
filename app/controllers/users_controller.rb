@@ -104,8 +104,6 @@ class UsersController < ApplicationController
     else
       redirect '/login'
     end
-    
-    
   end
   
   get '/user/:slug/edit' do
@@ -164,16 +162,55 @@ class UsersController < ApplicationController
   #     t.timestamps
   #   end
   # end
-# end
+
   get '/user/:slug/delete_account/password_verfication' do
+    @user = User.find_by_slug(params[:slug])
+    if logged_in?
+      if current_user == @user
+        erb: '/user/password_verfication'
+      else
+        redirect '/events'
+      end
+    else
+      redirect '/login'
+    end
+  end
+  
+  post '/user/:slug/delete_account/password_verfication' do
+    @user = User.find_by_slug(params[:slug])
+    if logged_in?
+      if current_user == @user
+        if params[:password1] == [:password2]
+          if @user.authenticate(params[:password1])
+            session[:password_verfication] = "true"
+            redirect "/user/#{@user.slug}/delete_account"
+          else
+            flash[:message] = "Password is incorrect."
+            redirect "user/#{@user.slug}/delete_account/password_verfication"
+          end
+        else
+          flash[:message] = "Your entries did not match."
+          redirect "user/#{@user.slug}/delete_account/password_verfication"
+        end
+      else
+        redirect '/events'
+      end
+    else
+      redirect '/login'
+    end
   end
 
   delete '/user/:slug/delete_account' do
     @user = User.find_by_slug(params[:slug])
     if logged_in?
       if current_user == @user
-        @user.delete
-        redirect '/'
+         if session[:password_verfication] == "true"
+            session[:password_verfication] = "false"
+            @user.delete
+            redirect '/'
+          else
+            redirect "user/#{@user.slug}/delete_account/password_verfication"
+          end
       else
         flash[:message] = "You are not authorized to make this request."
         redirect '/events'
