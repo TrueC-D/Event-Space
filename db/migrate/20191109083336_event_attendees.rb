@@ -1,4 +1,4 @@
-class CreateEventAttendees < ActiveRecord::Migration[5.2]
+class EventAttendees < ActiveRecord::Migration[5.2]
   def change
     create_table :event_attendees do |t|
       t.integer :user_id
