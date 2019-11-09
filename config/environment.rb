@@ -1,6 +1,6 @@
 ENV['SINATRA_ENV'] ||= "development"
 
-
+require 'pry'
 require 'bundler/setup'
 require 'active_record'
 require 'require_all'
