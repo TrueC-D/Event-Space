@@ -61,7 +61,7 @@ class EventsController < ApplicationController
     if logged_in?
       if @event
         if current_user == @event.user
-          if params.any? {|key, value| value.strip.length == 0
+          if params.any? {|key, value| value.strip.length == 0}
             flash[:message] = "Entries cannot be blank."
             redirect "/events/#{params[:id]}/edit"
           else
@@ -93,7 +93,9 @@ class EventsController < ApplicationController
       redirect '/login'
     end
   end
-    
+  
+end
+
     #   class CreateEvents < ActiveRecord::Migration[5.2]
 #   def change
 #     create_table :events do |t|

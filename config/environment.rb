@@ -1,11 +1,11 @@
 # ENV['SINATRA_ENV'] ||= "development"
 
 require 'bundler/setup'
+require 'active_record'
+require 'require_all'
 # Bundler.require(:default, ENV['SINATRA_ENV'])
 
-if ActiveRecord::Migrator.needs_migration?
-  raise 'Migrations are pending. Run `rake db:migrate` to resolve the issue.'
-end
+require 'sinatra'
 
 configure :development do 
   set :database,
@@ -14,4 +14,3 @@ end
 
 require_all 'app'
 
-# require 'sinatra'
