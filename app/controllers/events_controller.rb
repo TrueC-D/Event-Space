@@ -1,6 +1,4 @@
 class EventsController < ApplicationController
-  
-  
   get '/events' do 
     if logged_in?
       @events = Events.all

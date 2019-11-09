@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  use Rack::Flash
+ 
   
   get '/signup' do
     if logged_in?
@@ -71,6 +71,7 @@ class UsersController < ApplicationController
   
   get '/user/:slug/edit/password_verfication' do
     @user = User.find_by_slug(params[:slug])
+    @destination = "edit"
     if logged_in?
       if current_user == @user
         erb: '/user/password_verfication'
@@ -149,22 +150,10 @@ class UsersController < ApplicationController
       redirect '/login'
     end
   end
-  
-    # class CreateUsers < ActiveRecord::Migration[5.2]
-  # def change
-  #   create_table :users do |t|
-  #     t.string :first_name
-  #     t.string :last_name
-  #     t.text :about_me
-  #     t.string :username
-  #     t.string :password_digest
-  #     t.string :email
-  #     t.timestamps
-  #   end
-  # end
 
   get '/user/:slug/delete_account/password_verfication' do
     @user = User.find_by_slug(params[:slug])
+    @destination = "delete_account"
     if logged_in?
       if current_user == @user
         erb: '/user/password_verfication'
