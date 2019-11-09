@@ -88,14 +88,15 @@ class UsersController < ApplicationController
       if current_user == @user
         if params[:password1] == [:password2]
           if @user.authenticate(params[:password1])
-            session[:password_verfication] = true
+            session[:password_verfication] = "true"
             redirect "/user/#{@user.slug}/edit"
           else
             flash[:message] = "Password is incorrect."
             redirect "user/#{@user.slug}/edit/password_verfication"
+          end
         else
           flash[:message] = "Your entries did not match."
-          erb: '/user/password_verfication'
+          redirect "user/#{@user.slug}/edit/password_verfication"
         end
       else
         redirect '/events'
@@ -111,7 +112,12 @@ class UsersController < ApplicationController
     @user = User.find_by_slug(params[:slug])
     if logged_in?
       if current_user == @user
-        erb :'user/update_user'
+        if session[:password_verfication] == "true"
+          session[:password_verfication] = "pending"
+          erb :'user/update_user'
+        else
+          redirect "user/#{@user.slug}/edit/password_verfication"
+        end
       else
         flash[:message] = "You are not authorized to view this page."
         redirect '/events'
@@ -129,8 +135,13 @@ class UsersController < ApplicationController
           flash[:message] = "Entries cannot be empty."
           redirect "/user/#{params[:slug]}/edit"
         else
-          @user.update(first_name: params[:first_name], last_name: params[:last_name], about_me: params[:about_me], username: params[:username], email: params[:email], password: params[:password])
-          redirect '/events'
+          if session[:password_verfication] == "pending"
+            session[:password_verfication] = "false"
+            @user.update(first_name: params[:first_name], last_name: params[:last_name], about_me:   params[:about_me], username: params[:username], email: params[:email], password: params[  :password])
+            redirect '/events'
+          else
+            redirect "user/#{@user.slug}/edit/password_verfication"
+          end
         end
       else
         flash[:message] = "You are not authorized to make this request."
