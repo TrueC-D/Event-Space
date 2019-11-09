@@ -63,8 +63,7 @@ class EventsController < ApplicationController
             flash[:message] = "Entries cannot be blank."
             redirect "/events/#{params[:id]}/edit"
           else
-            @event.update
-            # @event.update(event_name: params[:event_name], event_type: params[:event_type], description: params[:description])
+            @event.update(event_name: params[:event_name], event_type: params[:event_type], description: params[:description])
             redirect "/events/#{@event.id}"
           end
         else
@@ -93,16 +92,3 @@ class EventsController < ApplicationController
   end
   
 end
-
-    #   class CreateEvents < ActiveRecord::Migration[5.2]
-#   def change
-#     create_table :events do |t|
-#       t.string :event_name
-#       t.string :event_type
-#       t.text :description
-#       t.timestamps null: :false
-#     end
-#   end
-# end
-
-# <a href "/my_events">Home</a> <a href "/events">Events Trending</a> <a href "/login">Login</a> <a href "/logout">Logout</a> 

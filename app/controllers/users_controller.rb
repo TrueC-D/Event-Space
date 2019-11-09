@@ -1,4 +1,40 @@
 class UsersController < ApplicationController
+  get '/users/:slug' do
+    @user = User.find_by_slug(params[:slug])
+    if logged_in?
+      if current_user = @user
+        erb :'users/user_info'
+      else
+        flash[:message] 
+        redirect '/events'
+      end
+    else
+      redirect 'login'
+    end
+  end
+  
+  get 'users/:slug/events_hosted' do
+    @user = User.find_by_slug(params[:slug])
+    if logged_in?
+        erb :"users/events_hosted"
+    else
+      redirect '/login'
+    end
+  end
+  
+  get 'user/:slug/events_attending' do 
+    @user = User.find_by_slug(params[:slug])
+    if logged_in?
+      if @user == current_user 
+        erb :"users/events_attending"
+      else
+        redirect '/events'
+      end
+    else
+      redirect '/login'
+    end
+  end
+  
   
   get '/signup' do
     if logged_in?
@@ -54,20 +90,6 @@ class UsersController < ApplicationController
     end
   end
   
-  get '/users/:slug' do
-    @user = User.find_by_slug(params[:slug])
-    if logged_in?
-      if current_user = @user
-        erb :'users/user_info'
-      else
-        flash[:message] 
-        redirect '/events'
-      end
-    else
-      redirect 'login'
-    end
-  end
-  
   get '/user/:slug/edit/password_verfication' do
     @user = User.find_by_slug(params[:slug])
     @destination = "edit"
@@ -88,7 +110,7 @@ class UsersController < ApplicationController
       if current_user == @user
         if params[:password1] == [:password2]
           if @user.authenticate(params[:password1])
-            session[:password_verfication] = "true"
+            session[:password_verfication] = "true-editing"
             redirect "/user/#{@user.slug}/edit"
           else
             flash[:message] = "Password is incorrect."
@@ -110,7 +132,7 @@ class UsersController < ApplicationController
     @user = User.find_by_slug(params[:slug])
     if logged_in?
       if current_user == @user
-        if session[:password_verfication] == "true"
+        if session[:password_verfication] == "true-editing"
           session[:password_verfication] = "pending"
           erb :'user/update_user'
         else
@@ -170,7 +192,7 @@ class UsersController < ApplicationController
       if current_user == @user
         if params[:password1] == [:password2]
           if @user.authenticate(params[:password1])
-            session[:password_verfication] = "true"
+            session[:password_verfication] = "true-deleting"
             redirect "/user/#{@user.slug}/delete_account"
           else
             flash[:message] = "Password is incorrect."
@@ -192,7 +214,7 @@ class UsersController < ApplicationController
     @user = User.find_by_slug(params[:slug])
     if logged_in?
       if current_user == @user
-         if session[:password_verfication] == "true"
+         if session[:password_verfication] == "true-deleting"
             session[:password_verfication] = "false"
             @user.delete
             redirect '/'
@@ -204,16 +226,6 @@ class UsersController < ApplicationController
         redirect '/events'
       end
     else
-      redirect '/login'
-    end
-  end
-  
-  get 'users/:slug/events_hosted' do
-    @user = User.find_by_slug(params[:slug])
-    if logged_in?
-        erb :"users/:user_events"
-    else
-    
       redirect '/login'
     end
   end
