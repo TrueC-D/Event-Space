@@ -10,7 +10,9 @@
           <%=yield%>
         </div>
         <br>
-        <a href= "'users/<%=current_user.slug%>/events_hosted'">Events Hosted</a> <a href="/user/<%=current_user.slug%>/events_attending">Events Attending </a> <a href= "/events">Events Trending</a> <a href="/logout">Log out</a> 
+        <a href= "/users/<%=current_user.slug%>/events_hosted">Events Hosted</a> <a href="/users/<%=current_user.slug%>/events_attending">Events Attending </a> <a href= "/events">Events Trending</a> <a href="/logout">Log out</a> 
+        <br>
+        <a href="/events/new">Create Event</a> <a href='/users/<%=current_user.slug%>' >Account Info</a>
       </body>
     </html>
 <% else %>

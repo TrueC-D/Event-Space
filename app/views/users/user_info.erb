@@ -1,23 +1,30 @@
 <%if logged_in?%>
   <%if current_user == @user%>
     <h2>Your Info</h2>
-    <br/><label>First Name:</label>
-    <br/><%=@user.first_name%>
-    <br/><label>Last Name:</label>
-    <br/><%=@user.last_name%>
-    <br/><label>About <%=@user.username%>: </label>
-    <br/><%=@user.about_me%>
-    <br/><label>Username:</label>
-    <br/><%=@user.username%>
-    <br/><label>Email:</label>
-    <br/> <%=@user.email%>
-    <br/><a href= '/users/<%=@user.slug%>/edit/password_verification'>Update</a> <a href= '/users/<%=@user.slug%>/events_hosted'>My Hosted Events</a>
+    <b>First Name:</b>
+    <br><br/><%=@user.first_name%>
+    <br><br/><b>Last Name:</b>
+    <br><br/><%=@user.last_name%>
+    <br><br/><b>About <%=@user.username%>: </b>
+    <br><br/><%=@user.about_me%>
+    <br><br/><b>Username:</b>
+    <br><br/><%=@user.username%>
+    <br><br/><b>Email:</b>
+    <br><br/> <%=@user.email%>
+    <br><br/><a href= '/users/<%=@user.slug%>/edit/password_verification'>Update</a> <a href= '/user/<%=@user.slug%>/update_password'>Change Password</a> </a><a href= '/users/<%=@user.slug%>/events_hosted'>My Hosted Events</a>
+    <br/>
+    <br>
   <%else%>
-    <br/><h2><%=@user.username%></h2>
-    <br/><label>First Name:</label>
-    <br/><%=@user.first_name%>
-    <br/><label>Last Name:</label>
-    <br/><%=@user.last_name%>
-    <br/><label>About <%=@user.username%>: </label>
-    <br/><%=@user.about_me%>
-    <br/><a href= '/users/<%=@user.slug%>/events_hosted'><%=@user.username%>'s Events</a>  
+   <h2><%=@user.username%></h2>
+   <b>First Name:</b>
+   <br><br/><%=@user.first_name%>
+   <br><br/><b>Last Name:</b>
+   <br><br/><%=@user.last_name%>
+   <br><br/><b>About <%=@user.username%>: </b>
+   <br><br/><%=@user.about_me%>
+   <br><br/><a href= '/users/<%=@user.slug%>/events_hosted'><%=@user.username%>'s Events</a>  
+    <br>
+    <br>
+  <%end%>
+<%end%>
+    

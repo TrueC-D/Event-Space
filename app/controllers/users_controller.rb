@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     end
   end
   
-  get '/user/:slug/events_attending' do 
+  get '/users/:slug/events_attending' do 
     @user = User.find_by_slug(params[:slug])
     @event_attendee = EventAttendee.all
     if logged_in?
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
   post '/login' do 
     @user = User.find_by(:username=> params[:username])
     if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.username
+      session[:user_id] = @user.id
       redirect '/events'
     else
       flash[:message] = "Your credentials are incorrect. Please try again."
@@ -91,12 +91,12 @@ class UsersController < ApplicationController
     end
   end
   
-  get '/user/:slug/edit/password_verfication' do
+  get '/users/:slug/edit/password_verification' do
     @user = User.find_by_slug(params[:slug])
     @destination = "edit"
     if logged_in?
       if current_user == @user
-        erb :'/user/password_verfication'
+        erb :'/users/password_verification'
       else
         redirect '/events'
       end
@@ -105,48 +105,73 @@ class UsersController < ApplicationController
     end
   end
   
-  post '/user/:slug/edit/password_verfication' do
+  # post '/user/:slug/edit/password_verification' do
+  #   @user = User.find_by_slug(params[:slug])
+  #   if logged_in?
+  #     if current_user == @user
+  #       if params[:password1] == [:password2]
+  #         if @user.authenticate(params[:password1])
+  #           session[:password_verfication] = "true-editing"
+  #           redirect "/user/#{@user.slug}/edit"
+  #         else
+  #           flash[:message] = "Password is incorrect."
+  #           redirect "user/#{@user.slug}/edit/password_verfication"
+  #         end
+  #       else
+  #         flash[:message] = "Your entries did not match."
+  #         redirect "user/#{@user.slug}/edit/password_verfication"
+  #       end
+  #     else
+  #       redirect '/events'
+  #     end
+  #   else
+  #     redirect '/login'
+  #   end
+  # end
+  
+  post '/users/:slug/edit' do 
     @user = User.find_by_slug(params[:slug])
     if logged_in?
       if current_user == @user
-        if params[:password1] == [:password2]
+        if params[:password1] == params[:password2]
           if @user.authenticate(params[:password1])
-            session[:password_verfication] = "true-editing"
-            redirect "/user/#{@user.slug}/edit"
+            session[:password_verification] = "true-editing"
+            erb :'users/update_user'
           else
-            flash[:message] = "Password is incorrect."
-            redirect "user/#{@user.slug}/edit/password_verfication"
+            flash[:message]= "Password is incorrect."
+            redirect "/users/#{@user.slug}/edit/password_verification"
           end
         else
-          flash[:message] = "Your entries did not match."
-          redirect "user/#{@user.slug}/edit/password_verfication"
+          flash[:message]="Your entries did not match."
+          redirect "/users/#{@user.slug}/edit/password_verification"
         end
       else
-        redirect '/events'
+        flash[:message]="You are not authorized to view this page"
+        redirect "/events"
       end
     else
       redirect '/login'
     end
   end
   
-  get '/user/:slug/edit' do
-    @user = User.find_by_slug(params[:slug])
-    if logged_in?
-      if current_user == @user
-        if session[:password_verfication] == "true-editing"
-          session[:password_verfication] = "pending"
-          erb :'user/update_user'
-        else
-          redirect "user/#{@user.slug}/edit/password_verfication"
-        end
-      else
-        flash[:message] = "You are not authorized to view this page."
-        redirect '/events'
-      end
-    else
-      redirect '/login'
-    end
-  end
+  # get '/users/:slug/edit' do
+  #   @user = User.find_by_slug(params[:slug])
+  #   if logged_in?
+  #     if current_user == @user
+  #       if session[:password_verification] == "true-editing"
+  #         session[:password_verification] = "pending"
+  #         erb :'users/update_user'
+  #       else
+  #         redirect "users/#{@user.slug}/edit/password_verification"
+  #       end
+  #     else
+  #       flash[:message] = "You are not authorized to view this page."
+  #       redirect '/events'
+  #     end
+  #   else
+  #     redirect '/login'
+  #   end
+  # end
   
   patch '/users/:slug' do
     @user = User.find_by_slug(params[:slug])
@@ -154,14 +179,14 @@ class UsersController < ApplicationController
       if @user == current_user
         if params.any? {|key, value| value.strip.length == 0}
           flash[:message] = "Entries cannot be empty."
-          redirect "/user/#{params[:slug]}/edit"
+          redirect "/users/#{params[:slug]}/edit"
         else
-          if session[:password_verfication] == "pending"
-            session[:password_verfication] = "false"
+          if session[:password_verification] == "true-editing"
+            session[:password_verification] = "false"
             @user.update(first_name: params[:first_name], last_name: params[:last_name], about_me:   params[:about_me], username: params[:username], email: params[:email], password: params[  :password])
             redirect '/events'
           else
-            redirect "user/#{@user.slug}/edit/password_verfication"
+            redirect "users/#{@user.slug}/edit/password_verification"
           end
         end
       else
@@ -173,12 +198,12 @@ class UsersController < ApplicationController
     end
   end
 
-  get '/user/:slug/delete_account/password_verfication' do
+  get '/users/:slug/delete_account/password_verification' do
     @user = User.find_by_slug(params[:slug])
     @destination = "delete_account"
     if logged_in?
       if current_user == @user
-        erb :'/user/password_verfication'
+        erb :'/users/password_verification'
       else
         redirect '/events'
       end
@@ -187,21 +212,21 @@ class UsersController < ApplicationController
     end
   end
   
-  post '/user/:slug/delete_account/password_verfication' do
+  post '/users/:slug/delete_account/password_verification' do
     @user = User.find_by_slug(params[:slug])
     if logged_in?
       if current_user == @user
         if params[:password1] == [:password2]
           if @user.authenticate(params[:password1])
-            session[:password_verfication] = "true-deleting"
-            redirect "/user/#{@user.slug}/delete_account"
+            session[:password_verification] = "true-deleting"
+            redirect "/users/#{@user.slug}/delete_account"
           else
             flash[:message] = "Password is incorrect."
-            redirect "user/#{@user.slug}/delete_account/password_verfication"
+            redirect "users/#{@user.slug}/delete_account/password_verification"
           end
         else
           flash[:message] = "Your entries did not match."
-          redirect "user/#{@user.slug}/delete_account/password_verfication"
+          redirect "users/#{@user.slug}/delete_account/password_verification"
         end
       else
         redirect '/events'
@@ -211,16 +236,16 @@ class UsersController < ApplicationController
     end
   end
 
-  delete '/user/:slug/delete_account' do
+  delete '/users/:slug/delete_account' do
     @user = User.find_by_slug(params[:slug])
     if logged_in?
       if current_user == @user
-         if session[:password_verfication] == "true-deleting"
-            session[:password_verfication] = "false"
+         if session[:password_verification] == "true-deleting"
+            session[:password_verification] = "false"
             @user.delete
             redirect '/'
           else
-            redirect "user/#{@user.slug}/delete_account/password_verfication"
+            redirect "users/#{@user.slug}/delete_account/password_verification"
           end
       else
         flash[:message] = "You are not authorized to make this request."
@@ -230,6 +255,14 @@ class UsersController < ApplicationController
       redirect '/login'
     end
   end
+  
+  get '/user/:slug/update_password' do 
+    
+  end
+  
+  patch '/user/:slug/update_password' do
+  end
+  
   
 end
 
