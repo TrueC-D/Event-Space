@@ -1,8 +1,8 @@
-<h2>Welcom, <%@current_user.first_name%></h2>
 
-<br/>
+<%puts "event_index accessed"%>
+<h2>Welcome, <%=@current_user.first_name%></h2>
 
-<label>Events Trending</label>
+<h3>Events Trending</h3>
 <%@events.each do |event|%>
   <a href='events/<%=event.id%>'> <%=event.event_name%> <%=event.schedule%></a>
   <br/>

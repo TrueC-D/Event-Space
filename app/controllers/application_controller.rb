@@ -26,3 +26,5 @@ class ApplicationController < Sinatra::Base
   end
   
 end
+
+puts "app controller has been accessed"

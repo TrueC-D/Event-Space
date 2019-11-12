@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   get '/events' do 
     @current_user  = current_user
     if logged_in?
-      @events = Events.all
+      @events = Event.all
       erb :'events/event_index'
     else
       redirect '/login'
@@ -31,6 +31,8 @@ class EventsController < ApplicationController
       redirect '/login'
     end
   end
+  
+  puts "events controller has been accessed"
 
   get '/events/:id' do
     @current_user = current_user

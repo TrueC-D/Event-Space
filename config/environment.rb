@@ -13,5 +13,9 @@ end
 
 require_all 'app'
 require 'pry'
-equire 'sinatra'
+require 'sinatra'
+
+# require_relative '../app/views/users'
+
+puts 'environment has been accessed'
 

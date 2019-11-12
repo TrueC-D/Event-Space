@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     end
   end
   
-  get 'users/:slug/events_hosted' do
+  get '/users/:slug/events_hosted' do
     @user = User.find_by_slug(params[:slug])
     if logged_in?
         erb :"users/events_hosted"
@@ -22,8 +22,9 @@ class UsersController < ApplicationController
     end
   end
   
-  get 'user/:slug/events_attending' do 
+  get '/user/:slug/events_attending' do 
     @user = User.find_by_slug(params[:slug])
+    @event_attendee = EventAttendee.all
     if logged_in?
       if @user == current_user 
         erb :"users/events_attending"
@@ -231,3 +232,5 @@ class UsersController < ApplicationController
   end
   
 end
+
+puts "users controller has been accessed"
