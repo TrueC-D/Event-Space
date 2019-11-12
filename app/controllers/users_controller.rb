@@ -177,7 +177,7 @@ class UsersController < ApplicationController
   get '/users/:slug/update_password' do
     @user = User.find_by_slug(params[:slug])
     if logged_in?
-      if current_user == @users
+      if current_user == @user
         erb :'/users/update_password'
       else
         flash[:message]="You are not authorized to view this page."
@@ -195,6 +195,7 @@ class UsersController < ApplicationController
         if @user.authenticate(params[:password])
           if params[:newpassword] == params[:newpassword_confirmed]
             @user.update(password: params[:newpassword])
+            flash[:message]= "password change successful"
             redirect "/users/#{@user.slug}"
           else
             flash[:message] = "Your new passwords do not match."
