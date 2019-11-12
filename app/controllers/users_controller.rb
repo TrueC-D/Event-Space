@@ -130,25 +130,6 @@ class UsersController < ApplicationController
     end
   end
   
-  # get '/users/:slug/edit' do
-  #   @user = User.find_by_slug(params[:slug])
-  #   if logged_in?
-  #     if current_user == @user
-  #       if session[:password_verification] == "true-editing"
-  #         session[:password_verification] = "pending"
-  #         erb :'users/update_user'
-  #       else
-  #         redirect "users/#{@user.slug}/edit/password_verification"
-  #       end
-  #     else
-  #       flash[:message] = "You are not authorized to view this page."
-  #       redirect '/events'
-  #     end
-  #   else
-  #     redirect '/login'
-  #   end
-  # end
-  
   patch '/users/:slug' do
     @user = User.find_by_slug(params[:slug])
     if logged_in?
