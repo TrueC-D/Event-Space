@@ -63,8 +63,40 @@ class EventsController < ApplicationController
     end
   end
   
-  post '/events/:id' do 
+  post '/events/:id/attending' do
+    if logged_in?
+      if Event.find_by_id(params[:id])
+        EventAttendee.new(event_id: params[:id], user_id: current_user.id)
+        redirect "/events/#{params[:id]}"
+      else
+        flash[:message]= "This event does not exist."
+        redirect '/events'
+      end
+    else
+      redirect '/login'
+    end
   end
+  
+  delete '/events/:id/attending' do
+    if logged_in?
+      if Event.find_by(params[:id])
+        @event = EventAttendee.select(event_id: params[:id])
+        @user_attendance = @event.find_by(user_id: current_user.id)
+        if @user_attendance
+          @user_attendance.delete
+        end
+        redirect "events/#{params[:id]}"
+      else
+        flash[:message]= "This event does not exist."
+        redirect '/events'
+      end
+    else
+      redirect '/login'
+    end
+  end
+        
+        
+  
   
   patch '/events/:id' do 
     @event = Event.find_by_id(params[:id])

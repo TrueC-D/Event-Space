@@ -21,15 +21,16 @@
 
 <% if @event.users.include?(current_user)%>
   <b>You are attending this event.</b>
-    <!--<form action ='/events/<%=@event.id%>' method="post">-->
-  
-    <!--<input type="submit" name="not_going" value="Not Going">-->
-    <!--</form>-->
+  <form action ='/events/<%=@event.id%>/attending' method="post">
+    <!--<input type ="hidden" name="not_going" value="Do you want to leave this event?">-->
+    <input id="hidden" type= "hidden" name="_method" value="delete">
+    <input type="submit" name="submit" value="Leave Event">
+  </form>
 <%else%>
-  <b>Would you like to attend this event?</b>
-  <!--<form action ='/events/<%=@event.id%>' method="post">-->
-      
-  <!--<input type="submit" name="going" value="Yes">-->
-  <!--</form>-->
+  <b>You are not attending this event.</b>
+  <form action ='/events/<%=@event.id%>/attending' method="post">
+    <!--<input type="hidden" name="going" value ="Would you like to attend this event?">-->
+    <input type="submit" name="submit" value="Attend Event">
+  </form>
 <%end%>
 
