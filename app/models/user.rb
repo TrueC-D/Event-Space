@@ -4,7 +4,13 @@ class User <ActiveRecord::Base
   has_many :event_attendees
   has_many :users, through: :events
   # has_many :users, through: :events, through: :event_attendees
-  has_many :events, through: :event_attendees
+  # has_many :events, through: :event_attendees
+  
+  def events_attending
+    Event_attendees.all.select{|event| event.user_id == self.id}.collect{|event| event.event_id}
+  end
+  
+  def 
   
   def slug
     self.username.downcase.gsub(" ", "-")
