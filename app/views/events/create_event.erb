@@ -3,11 +3,11 @@
 <form action="/events" method= "POST">
   <label>Event Name:</label>
   <br/>
-  <input type= "text" name= "event_name">
+  <input type= "text" name= "name">
   <br/>
   <label>Event Type:</label>
   <br/>
-  <input type= "text" name="event_type">
+  <input type= "text" name="type">
   <br/>
   <label>Description:</label>
   <br/>
@@ -15,7 +15,8 @@
   <br/>
   <label>Event Time:</label>
   <br/>
-  <input type= "datetime" name="schedule">
-  <br/>
+  <input type="datetime-local" name="schedule" value="<%=Time.now%>">
+  <!--<input type= "datetime" name="schedule" value=>-->
+  <!--<br/>-->
   <input type="submit" name="submit" value="Create">
 </form>

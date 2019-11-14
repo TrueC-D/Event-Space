@@ -3,11 +3,11 @@
 <form action="/events/<%=@event.id%>" method = "post">
   <label>Event Name:</label>
   <br/>
-  <input type= "text" name= "event_name" value= "<%=@event.eventname%>">
+  <input type= "text" name= "name" value= "<%=@event.name%>">
   <br/>
   <label>Event Type:</label>
   <br/>
-  <input type= "text" name="event_type" value = "<%=@event.event_type%>">
+  <input type= "text" name="type" value = "<%=@event.type%>">
   <br/>
   <label>Description:</label>
   <br/>
@@ -15,7 +15,7 @@
   <br/>
   <label>Event Time:</label>
   <br/>
-  <input type= "datetime" name="schedule"<%=@event.schedule%>>
+  <input type= "datetime-local" name="schedule" value="<%=@event.schedule%>">
   <br/>
   <input id="hidden" type= "hidden" name="_method" value="patch">
   <input type="submit" name="submit" value="Update">

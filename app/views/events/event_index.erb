@@ -4,7 +4,7 @@
 
 <h3>Events Trending</h3>
 <%@events.each do |event|%>
-  <a href='events/<%=event.id%>'> <%=event.event_name%> <%=event.schedule%> created by:<%=event.user.username%></a>
-  <br/>
+  <a href='events/<%=event.id%>'> Event: <%=event.name%> Time: <%=event.schedule%> Creator: <%=event.user.username%></a>
+  <br/><br/>
 <%end%>
   
