@@ -11,7 +11,7 @@
     <br><br/><%=@user.username%>
     <br><br/><b>Email:</b>
     <br><br/> <%=@user.email%>
-    <br><br/><a href= '/users/<%=@user.slug%>/edit/password_verification'>Update</a> <a href= '/users/<%=@user.slug%>/update_password'>Change Password</a> </a><a href= '/users/<%=@user.slug%>/events_hosted'>My Hosted Events</a>
+    <br><br/><a href= '/users/<%=@user.slug%>/edit/password_verification'>Update</a> <a href= '/users/<%=@user.slug%>/update_password'>Change Password</a> </a><a href= '/users/<%=@user.slug%>/events_hosted'>My Hosted Events</a> <a href '/users/<%=@user.slug%>/delete_account/password_verification'> Delete Account</a>
     <br/>
     <br>
   <%else%>
