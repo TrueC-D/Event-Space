@@ -13,6 +13,10 @@
 <br/>
 '<%=@event.description%>'
 <br/>
+<b>Created By:</b>
+<br/>
+<a href= "/users/<%=@event.user.slug%>"><%=@event.user.username%></a>
+<br/>
 <b>Event Time:</b>
 <br/>
 '<%=@event.schedule%>'
