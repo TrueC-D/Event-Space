@@ -29,7 +29,7 @@
 <%else%>
   <b>You are not attending this event.</b>
   <form action ='/events/<%=@event.id%>/attending' method="post">
-    <!--<input type="hidden" name="going" value ="Would you like to attend this event?">-->
+    <input type="hidden" name="going" value ="Would you like to attend this event?">
     <input type="submit" name="submit" value="Attend Event">
   </form>
 <%end%>

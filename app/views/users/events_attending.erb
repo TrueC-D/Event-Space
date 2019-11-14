@@ -1,7 +1,7 @@
 <h2>Events <%=@user.username%> is going to:</h2>
 <br>
 
-<%@user.event_attending.each do |event| %>
+<%@user.events_attending.each do |event| %>
 
 
 <a href="/events/<%=event.id%>"><%=event.event_name%> <%=event.schedule%></a>
