@@ -1,6 +1,6 @@
 <h2>Events <%=@user.username%> hosts</h2>
 <br/>
 <%@user.events.each do |event| %>
-<a href="/events/<%=event.id%>">Event: <%=event.name%> Type: <%=event.category%> Time: <%=event.schedule%> Creator: <%=event.user.username%></a>
+<a href="/events/<%=event.id%>"><%=event.name%> Type: <%=event.category%> Creator: <%=event.user.username%> Time: <%=event.schedule%></a>
 <br/>
 <%end%>

@@ -24,6 +24,8 @@
 <br/>
 
 
+
+<br>
 <% if @event.users.include?(current_user)%>
   <b>You are attending this event.</b>
   <form action ='/events/<%=@event.id%>/attending' method="post">
@@ -39,3 +41,9 @@
   </form>
 <%end%>
 
+<% if @event.user == current_user%>
+<br>
+  <a href = '/events/<%=@event.id%>/edit'> Edit Event</a>
+  <a href = '/events/<%=@event.id%>/delete'> Delete Event</a>
+  <br/>
+<%end%>

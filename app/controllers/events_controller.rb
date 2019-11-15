@@ -50,7 +50,7 @@ class EventsController < ApplicationController
     @event = Event.find_by_id(params[:id])
     if logged_in?
       if current_user == @event.user
-        erb :'events/edit_event'
+        erb :'events/update_event'
       else
         flash[:message] = "You are not authorzed to view this page."
         redirect '/events'
