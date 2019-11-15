@@ -93,34 +93,18 @@ class EventsController < ApplicationController
       redirect '/login'
     end
   end
-  # delete '/events/:id/delete' do 
-  #   @event = Event.find_by_id(params[:id])
-  #   if logged_in?
-  #     if current_user == @event.user
-  #       @event.delete
-  #     end
-  #     redirect '/events'
-  #   else
-  #     redirect '/login'
-  #   end
-  # end
   
   delete '/events/:id/event_attendees' do
-    if logged_in?
-      if Event.find_by(params[:id])
-        @event = Event.find_by(params[:id])
-        if @event.users.include?(current_user)
-          event = EventAttendee.find_by_ids(current_user.id, params[:id])
-          event.delete
-        end
-        redirect "events/#{params[:id]}"
-      else
-        flash[:message]= "This event does not exist."
-        redirect '/events'
-      end
-    else
-      redirect '/login'
-    end
+    # if logged_in?
+    #   @event = Event.find_by(params[:id])
+      # if @event.users.include?(current_user)
+        @event = EventAttendee.find_by_ids(current_user.id, params[:id])
+        @event.delete
+    #   end
+    #     redirect "events/#{params[:id]}"
+    # else
+    #   redirect '/login'
+    # end
   end
   
   patch '/events/:id' do 
