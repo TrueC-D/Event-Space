@@ -23,10 +23,6 @@ class ApplicationController < Sinatra::Base
     def current_user
       User.find(session[:user_id])
     end
-    
-    def find_by_id(id)
-      
-    end
   end
   
 end

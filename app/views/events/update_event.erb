@@ -1,26 +1,41 @@
 <h2>Edit Your Event</h2>
-<br/>
+
 <form action="/events/<%=@event.id%>" method = "post">
   <label>Event Name:</label>
   <br/>
   <input type= "text" name= "name" value= "<%=@event.name%>">
   <br/>
+  <br>
   <label>Event Type:</label>
   <br/>
   <input type= "text" name="cateogory" value = "<%=@event.category%>">
   <br/>
+  <br>
   <label>Description:</label>
   <br/>
   <input type= "description" name="description" value = "<%=@event.description%>">
   <br/>
-  <label>Event Time:</label>
-  <br/>
-  <input type= "datetime-local" name="schedule" value="<%=@event.schedule%>">
+  
   <br/>
   <input id="hidden" type= "hidden" name="_method" value="patch">
   <input type="submit" name="submit" value="Update">
 </form>
 <br/>
+
+<b> Date/Time is Set For:</b>
+<br>
+ <%=@event.schedule%>
+ <br>
+<br>
+<form action="events/<%=@event.id%>/edit/date-time">
+    <input type="submit" value="Edit Event Date/Time"/>
+</form>
+</br>
+<br/>
+
+
+
+
 <form method="post" action="/events/<%=@event.id%>/delete">
   <input id="hidden" type="hidden" name="_method" value="DELETE">
   <input type="submit" value="Delete Event">

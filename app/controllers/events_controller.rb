@@ -107,19 +107,12 @@ class EventsController < ApplicationController
   
   delete '/events/:id/event_attendees' do
     if logged_in?
-      if @event = Event.find_by(params[:id])
+      if Event.find_by(params[:id])
+        @event = Event.find_by(params[:id])
         if @event.users.include?(current_user)
-          # event_attending = current_user.events_attending.find_by_id(params[:id])
-          # event.delete
-          
-          event = EventAttendee.find_by(user_id: current_user, event_id: 2)
+          event = EventAttendee.find_by_ids(current_user.id, params[:id])
           event.delete
         end
-        # event = EventAttendee.all.collect{|item| item.event_id == params[:id]} 
-        # @user_attendance = event.find_by(user_id: current_user.id)
-        # if @user_attendance
-        #   @user_attendance.delete
-        # end
         redirect "events/#{params[:id]}"
       else
         flash[:message]= "This event does not exist."
@@ -165,6 +158,37 @@ class EventsController < ApplicationController
     else
       redirect '/login'
     end
+  end
+  
+  get '/events/:id/edit/date-time' do 
+    if logged_in?
+      @event = Event.find_by_id(params[:id])
+      if current_user== @event.user
+        erb :'events/update_event_time'
+      else
+        flash[:message] = "You are not authorized to view this page."
+        redirect '/events'
+      end
+    else
+      redirect '/login'
+    end
+  end
+  
+  patch '/events/:id/edit/date-time' do 
+    if logged_in?
+      @event = Event.find_by_id(params[:id])
+      if current_user == @event.user
+        @event.update(schedule: params[:schedule])
+        redirect "/events/#{params[:id]"
+      else
+        flash[:message] = "You are not authorized to view this page."
+        redirect '/events'
+      end
+    else
+      redirect '/login'
+    end
+  end
+  
   end
   
 end

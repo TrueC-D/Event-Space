@@ -1,0 +1,12 @@
+<h2>Update <%=@event.name%></h2>
+
+<b>Current Date/Time:</b>
+<%=@event.schedule%>
+
+<b>New Date/Time:</b>
+<form method= "post" action= "events/<%=@event.id%>/edit/date-time">
+  <input type="datetime-local" name="schedule" value="<%=@event.schedule%>">
+  <input id = "hidden" type = "hidden" name="_method" value="patch">
+  <input type="submit" name="submit" value = "Update">
+</form>
+
