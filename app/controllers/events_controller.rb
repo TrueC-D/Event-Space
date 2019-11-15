@@ -20,13 +20,10 @@ class EventsController < ApplicationController
   post '/events' do 
     if logged_in?
       if params.any? {|key, value| value.strip.length == 0}
-        # event = Event.new(:event_name => params[:event_name], :event_type => params[:event_type], :event_description => params[:event_description], :user_id => current_user.id)
-        # event.save
-        # redirect '/events'
         flash[:message] = "You cannot have a blank entry."
         redirect '/events/new'
       else
-        event = Event.new(:name => params[:name], :type => params[:type], :description => params[:description], :schedule => params[:schedule], :user_id => current_user.id)
+        event = Event.new(:name => params[:name], :category => params[:category], :description => params[:description], :schedule => params[:schedule], :user_id => current_user.id)
         event.save
         redirect '/events'
         # flash[:message] = "You cannot have a blank entry."
@@ -107,7 +104,7 @@ class EventsController < ApplicationController
             flash[:message] = "Entries cannot be blank."
             redirect "/events/#{params[:id]}/edit"
           else
-            @event.update(name: params[:name], event_type: params[:type], description: params[:description])
+            @event.update(name: params[:name], category: params[:category], description: params[:description])
             redirect "/events/#{@event.id}"
           end
         else

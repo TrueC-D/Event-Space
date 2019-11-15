@@ -4,6 +4,6 @@
 <%@user.events_attending.each do |event| %>
 
 
-<a href="/events/<%=event.id%>">Event: <%=event.name%> Time:<%=event.schedule%> Creator: <%=event.user.username%></a>
+<a href="/events/<%=event.id%>">Event: <%=event.name%> Type: <%=event.category%> Time:<%=event.schedule%> Creator: <%=event.user.username%></a>
 <br/>
 <%end%>
