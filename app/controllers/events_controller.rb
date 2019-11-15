@@ -179,7 +179,7 @@ class EventsController < ApplicationController
       @event = Event.find_by_id(params[:id])
       if current_user == @event.user
         @event.update(schedule: params[:schedule])
-        redirect "/events/#{params[:id]"
+        redirect "/events/#{params[:id]}"
       else
         flash[:message] = "You are not authorized to view this page."
         redirect '/events'
@@ -187,8 +187,6 @@ class EventsController < ApplicationController
     else
       redirect '/login'
     end
-  end
-  
   end
   
 end
