@@ -23,8 +23,6 @@
 '<%=@event.schedule%>'
 <br/>
 
-
-
 <br>
 <% if @event.users.include?(current_user)%>
   <b>You are attending this event.</b>
@@ -33,6 +31,7 @@
     <input id="hidden" type= "hidden" name="_method" value="delete">
     <input type="submit" name="submit" value="Leave Event">
   </form>
+  
 <%else%>
   <b>You are not attending this event.</b>
   <form action ='/events/<%=@event.id%>/event_attendees' method="post">
@@ -45,6 +44,5 @@
 <br>
   <a href = '/events/<%=@event.id%>/event_attendees'>Event Attendees</a>
   <a href = '/events/<%=@event.id%>/edit'> Edit Event</a>
-  <a href = '/events/<%=@event.id%>/delete'> Delete Event</a>
   <br/>
 <%end%>

@@ -1,4 +1,4 @@
-<h2>Events <%=@user.username%> is going to:</h2>
+<h2>Events <%=@user.username%> is attending:</h2>
 <br>
 
 <%@user.events_attending.each do |event| %>
@@ -7,3 +7,5 @@
 <a href="/events/<%=event.id%>"><%=event.name%> Type: <%=event.category%> Creator: <%=event.user.username%> Time:<%=event.schedule%> </a>
 <br/>
 <%end%>
+
+

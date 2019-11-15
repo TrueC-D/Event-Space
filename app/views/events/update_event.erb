@@ -20,3 +20,8 @@
   <input id="hidden" type= "hidden" name="_method" value="patch">
   <input type="submit" name="submit" value="Update">
 </form>
+<br/>
+<form method="post" action="/events/<%=@event.id%>/delete">
+  <input id="hidden" type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete Event">
+</form>

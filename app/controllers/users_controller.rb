@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   
   get '/users/:slug/events_attending' do 
     @user = User.find_by_slug(params[:slug])
-    @event_attendee = EventAttendee.all
+    @event_attendee = EventAttendee
     if logged_in?
       if @user == current_user 
         erb :"users/events_attending"
@@ -111,7 +111,7 @@ class UsersController < ApplicationController
       if current_user == @user
         if params[:password1] == params[:password2]
           if @user.authenticate(params[:password1])
-            session[:password_verification] = "true-editing"
+            session[:password_verification] = "true"
             erb :'users/update_user'
           else
             flash[:message]= "Password is incorrect."
@@ -138,7 +138,7 @@ class UsersController < ApplicationController
           flash[:message] = "Entries cannot be empty."
           redirect "/users/#{params[:slug]}/edit"
         else
-          if session[:password_verification] == "true-editing"
+          if session[:password_verification] == "true"
             session[:password_verification] = "false"
             @user.update(first_name: params[:first_name], last_name: params[:last_name], about_me:   params[:about_me], username: params[:username], email: params[:email], password: params[  :password])
             erb :'users/update_user'
@@ -195,55 +195,18 @@ class UsersController < ApplicationController
     end
   end
   
-  get '/users/:slug/delete_account/password_verification' do
-    @user = User.find_by_slug(params[:slug])
-    @destination = "delete_account"
-    if logged_in?
-      if current_user == @user
-        erb :'/users/password_verification'
-      else
-        redirect '/events'
-      end
-    else
-      redirect '/login'
-    end
-  end
-  
-  
-  post '/users/:slug/delete_account/password_verification' do
-    @user = User.find_by_slug(params[:slug])
-    if logged_in?
-      if current_user == @user
-        if params[:password1] == [:password2]
-          if @user.authenticate(params[:password1])
-            session[:password_verification] = "true-deleting"
-            redirect "/users/#{@user.slug}/delete_account"
-          else
-            flash[:message] = "Password is incorrect."
-            redirect "users/#{@user.slug}/delete_account/password_verification"
-          end
-        else
-          flash[:message] = "Your entries did not match."
-          redirect "users/#{@user.slug}/delete_account/password_verification"
-        end
-      else
-        redirect '/events'
-      end
-    else
-      redirect '/login'
-    end
-  end
-
   delete '/users/:slug/delete_account' do
     @user = User.find_by_slug(params[:slug])
     if logged_in?
       if current_user == @user
-         if session[:password_verification] == "true-deleting"
+         if session[:password_verification] == "true"
             session[:password_verification] = "false"
+            # @user.events_attending.delete
+            # @user.events.delete
             @user.delete
             redirect '/'
           else
-            redirect "users/#{@user.slug}/delete_account/password_verification"
+            redirect "users/#{@user.slug}/edit/password_verification"
           end
       else
         flash[:message] = "You are not authorized to make this request."
