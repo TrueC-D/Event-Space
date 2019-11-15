@@ -59,8 +59,26 @@ class EventsController < ApplicationController
       redirect '/login'
     end
   end
-  
-  post '/events/:id/attending' do
+  get '/events/:id/event_attendees'
+    if logged_in?
+      @event = Event.find_by_id(params[:id])
+      if @event
+        if @event.user ==current_user
+          erb :'events/event_attendees'
+        else
+          flash[:message] = "You are not authrized to view this page."
+          redirect '/events'
+        end
+      else
+        flash[:message] = "This event does not exist"
+        redirect '/events'
+      end
+    else
+      redirect '/login'
+    end
+  end
+        
+  post '/events/:id/event_attendees' do
     if logged_in?
       if Event.find_by_id(params[:id])
         EventAttendee.new(event_id: params[:id], user_id: current_user.id)
@@ -74,7 +92,7 @@ class EventsController < ApplicationController
     end
   end
   
-  delete '/events/:id/attending' do
+  delete '/events/:id/event_attendees' do
     if logged_in?
       if Event.find_by(params[:id])
         @event = EventAttendee.select(event_id: params[:id])
