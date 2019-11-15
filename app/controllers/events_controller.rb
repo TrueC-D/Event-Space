@@ -59,6 +59,7 @@ class EventsController < ApplicationController
       redirect '/login'
     end
   end
+  
   get '/events/:id/event_attendees'
     if logged_in?
       @event = Event.find_by_id(params[:id])
@@ -82,6 +83,7 @@ class EventsController < ApplicationController
     if logged_in?
       if Event.find_by_id(params[:id])
         EventAttendee.new(event_id: params[:id], user_id: current_user.id)
+        EventAttendee.save
         redirect "/events/#{params[:id]}"
       else
         flash[:message]= "This event does not exist."
@@ -91,6 +93,7 @@ class EventsController < ApplicationController
       redirect '/login'
     end
   end
+  
   
   delete '/events/:id/event_attendees' do
     if logged_in?
