@@ -1,0 +1,7 @@
+<h2>Attendees for @event.name</h2>
+
+<%@event.users.each do |attendee|%>
+  <a href = '/user/<%=attendee.slug%>'><%=attendee.username%></a>
+  <br/>
+<%end%>
+  
