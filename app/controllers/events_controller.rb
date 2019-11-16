@@ -33,8 +33,6 @@ class EventsController < ApplicationController
       redirect '/login'
     end
   end
-  
-  puts "events controller has been accessed"
 
   get '/events/:id' do
     @current_user = current_user

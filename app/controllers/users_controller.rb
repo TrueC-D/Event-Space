@@ -201,12 +201,14 @@ class UsersController < ApplicationController
       if current_user == @user
          if session[:password_verification] == "true"
             session[:password_verification] = "false"
-            @user.events.delete
+            @user.event_attendees.each{|event| event.delete}
+            @user.events.each{|event| event.delete}
             @user.delete
             session.clear
             redirect '/'
+            redirect "/users/#{params[:slug]}"
           else
-            redirect "users/#{@user.slug}/edit/password_verification"
+            redirect "/users/#{@user.slug}/edit/password_verification"
           end
       else
         flash[:message] = "You are not authorized to make this request."

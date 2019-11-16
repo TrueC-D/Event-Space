@@ -6,7 +6,4 @@ class EventAttendee <ActiveRecord::Base
     self.all.find{|item| item.user_id== user_id && item.event_id == event_id}
   end
   
-  def delete
-    self.clear
-  end
 end
