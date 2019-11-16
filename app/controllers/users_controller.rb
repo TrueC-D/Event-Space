@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   
   get '/users/:slug/events_attending' do 
     @user = User.find_by_slug(params[:slug])
-    @event_attendee = EventAttendee
+    @event = Event.all
     if logged_in?
       if @user == current_user 
         erb :"users/events_attending"
