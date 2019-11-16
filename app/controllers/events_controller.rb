@@ -95,20 +95,15 @@ class EventsController < ApplicationController
   end
   
   delete '/events/:id/event_attendees' do
-    # if logged_in?
-    #   @event = Event.find_by(params[:id])
-    #   if @event.users.include?(current_user)
-    
+    if logged_in?
+      if current_user.event_attendees.find_by(event_id: params[:id])
         event = current_user.event_attendees.find_by(event_id: params[:id])
         current_user.event_attendees.delete(event) if event
-    
-        # event = current_user.events_attending.find_by(event_id: params[:id])
-    #     # event.delete
-    #   end
-    #     redirect "events/#{params[:id]}"
-    # else
-    #   redirect '/login'
-    # end
+      end
+        redirect "events/#{params[:id]}"
+    else
+      redirect '/login'
+    end
   end
   
   patch '/events/:id' do 
