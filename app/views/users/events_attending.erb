@@ -2,9 +2,8 @@
 <br>
 
 
-<%@user.events_attending.each do |item| %>
+<%@user.events_attending.each do |event| %>
 
-<%event = @event.find_by(item.event_id)%>
 
 <a href="/events/<%=event.id%>"><%=event.name%> Type: <%=event.category%> Creator: <%=event.user.username%> Time:<%=event.schedule%> </a>
 <br/>

@@ -201,9 +201,9 @@ class UsersController < ApplicationController
       if current_user == @user
          if session[:password_verification] == "true"
             session[:password_verification] = "false"
-            # @user.events_attending.delete
-            # @user.events.delete
+            @user.events.delete
             @user.delete
+            session.clear
             redirect '/'
           else
             redirect "users/#{@user.slug}/edit/password_verification"
