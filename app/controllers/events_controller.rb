@@ -117,11 +117,11 @@ class EventsController < ApplicationController
             redirect "/events/#{@event.id}"
           end
         else
-          flash[:message] = "You are not authrized to view this page."
+          flash[:message] = "You are not authorized to view this page."
           redirect '/events'
         end
       else
-        flash[:message] = "This page does not exist"
+        flash[:message] = "This page does not exist."
         redirect '/events'
       end
     else
@@ -133,6 +133,7 @@ class EventsController < ApplicationController
     @event = Event.find_by_id(params[:id])
     if logged_in?
       if current_user == @event.user
+        @event.event_attendees.each{|attendee| attendee.delete}
         @event.delete
       end
       redirect '/events'

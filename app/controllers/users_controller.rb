@@ -201,8 +201,11 @@ class UsersController < ApplicationController
       if current_user == @user
          if session[:password_verification] == "true"
             session[:password_verification] = "false"
-            @user.event_attendees.each{|event| event.delete}
-            @user.events.each{|event| event.delete}
+            @user.event_attendees.each{|attendance| attendance.delete}
+            @user.events.each do |event|
+              event.event_attendees.each{|attendee| attendee.delete}
+              event.delete
+            end
             @user.delete
             session.clear
             redirect '/'

@@ -2,14 +2,6 @@ class User <ActiveRecord::Base
   has_secure_password
   has_many :events
   has_many :event_attendees
-  # has_many :users, through: :events
-  # # has_many :users, through: :events, through: :event_attendees
-  # has_many :events_attending, through: :events, source: :event_attendees
-  
-  # def events_attending
-  #   event_ids = EventAttendee.all.select{|event| event.user_id == self.id}.each{|event| event.event_id}
-  #   event_ids.collect{|event_id| Event.find_by_id{id: :event_id}
-  # end
   
   def events_attending
     EventAttendee.all.select{|item| item.user == self}.collect{|item| item.event}
