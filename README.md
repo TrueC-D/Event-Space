@@ -5,6 +5,6 @@ This application allows users to log in, create an event, attend events, view ev
 
 Make sure you type and return "cd Event-Space", then "bundle install" in the console.  After all gems are installed, type and return "shotgun", it will return a message that says "Your server is running at [a long number]" followed by logs.  Copy the long number into your browser's address bar and press enter.  You will be directed to the Event-Space Index page. Sign Up/Log in to create and attend events.
 
+#Liscense
 
-
-
+https://opensource.org/licenses/MIT
