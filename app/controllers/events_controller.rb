@@ -65,7 +65,7 @@ class EventsController < ApplicationController
         if @event.user == current_user
           erb :'events/event_attendees'
         else
-          flash[:message] = "You are not authrized to view this page."
+          flash[:message] = "You are not authorized to view this page."
           redirect '/events'
         end
       else
