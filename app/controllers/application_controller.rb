@@ -17,7 +17,11 @@ class ApplicationController < Sinatra::Base
 
   helpers do
     def logged_in?
-      !!session[:user_id]
+      if !!session[:user_id]
+        if !User.exists?(session[:user_id])
+          redirect '/logout'
+        end
+      end
     end
 
     def current_user
