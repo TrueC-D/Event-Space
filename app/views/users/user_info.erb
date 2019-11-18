@@ -22,7 +22,10 @@
    <br><br/><%=@user.last_name%>
    <br><br/><b>About <%=@user.username%>: </b>
    <br><br/><%=@user.about_me%>
-   <br><br/><a href= '/users/<%=@user.slug%>/events_hosted'><%=@user.username%>'s Events</a>  
+   <br><br/>
+   <form action ="/users/<%=@user.slug%>/events_hosted">
+     <input type="submit" value= "<%=@user.username%>'s Events">
+   </form>
     <br>
     <br>
   <%end%>
