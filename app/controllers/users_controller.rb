@@ -5,7 +5,7 @@ class UsersController < ApplicationController
       if current_user = @user
         erb :'users/user_info'
       else
-        flash[:message] 
+        flash[:message] = "You are not authorized to view this page."
         redirect '/events'
       end
     else
@@ -140,8 +140,8 @@ class UsersController < ApplicationController
         else
           if session[:password_verification] == "true"
             session[:password_verification] = "false"
-            @user.update(first_name: params[:first_name], last_name: params[:last_name], about_me:   params[:about_me], username: params[:username], email: params[:email], password: params[  :password])
-            erb :'users/update_user'
+            @user.update(first_name: params[:first_name], last_name: params[:last_name], about_me:   params[:about_me], username: params[:username], email: params[:email])
+            redirect "/users/#{@user.slug}"
           else
             redirect "users/#{@user.slug}/edit/password_verification"
           end
